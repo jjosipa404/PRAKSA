@@ -1,0 +1,19 @@
+﻿@model PMANews.Areas.Identity.Data.PostImage
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container justify-content-md-center text-center col-md-6">
+    <h4>Sigurno želite obrisati ovu sliku?</h4>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group ">
+            <input type="submit" value="Obriši" class="btn btn-danger" />
+            <a asp-controller="PostImage" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Odustani</a>
+        </div>
+    </form>
+</div>
+
+

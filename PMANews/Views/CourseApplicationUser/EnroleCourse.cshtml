@@ -1,0 +1,34 @@
+﻿@model PMANews.Areas.Identity.Data.CourseApplicationUser
+
+@{
+    ViewData["Title"] = "EnroleCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="card-columns">
+        <div class="card border-success mb-3" style="max-width: 30rem;">
+            <form asp-action="EnroleCourse">
+                <div class="card-header">
+                    <input type="submit" value="Dodaj" class="btn btn-success" />
+                    <a class="btn btn-secondary" asp-controller="Course" asp-action="MyCourses">Odustani</a>
+                </div>
+                <div class="card-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Odaberite kolegij kojeg želite dodati:</label>
+                        <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<PMANews.Areas.Identity.Data.PostFile>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container justify-content-md-center text-left col-sm-8">
+        <div class="container-fluid text-center">
+            <a class="btn btn-outline-success w-100 mb-2" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@ViewBag.course.Id">
+                @ViewBag.course.Name
+            </a>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th> @Html.DisplayNameFor(model => model.Title)</th>
+                    <th> @Html.DisplayNameFor(model => model.DateCreated)</th>
+                    <th>@Html.DisplayNameFor(model => model.CategoryId)</th>
+                    <th> @Html.DisplayNameFor(model => model.AuthorId) </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Author.UserName)</td>
+                        <td>
+                            <a class="text-success" asp-action="DownloadFile" asp-route-filePath="@item.FilePath">Otvori</a> |
+                            @if (@ViewBag.User.UserName == item.Author.UserName)
+                            {
+                                //  @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

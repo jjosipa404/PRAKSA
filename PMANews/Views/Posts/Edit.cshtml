@@ -1,0 +1,50 @@
+﻿@model PMANews.Areas.Identity.Data.Post
+@using Microsoft.AspNetCore.Identity
+@using PMANews.Areas.Identity.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container justify-content-md-center text-left col-md-6">
+    <h4 class="col-form-label">Uredi objavu</h4>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Content" class="control-label"></label>
+            <textarea asp-for="Content" class="form-control" style="width:100%;padding:12px 20px;box-sizing:border-box;border:2px solid #ccc;border-radius:4px;height:400px;overflow:scroll;"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="CourseId" class="control-label"></label>
+            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group" hidden>
+            <label asp-for="AuthorId" class="control-label"></label>
+            <select asp-for="AuthorId" class="form-control custom-select" asp-items="ViewBag.AuthorId"></select>
+            <span asp-validation-for="AuthorId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Spremi promjene" class="btn btn-success" />
+            <a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">Odustani</a>
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

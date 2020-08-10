@@ -1,0 +1,104 @@
+﻿@page
+@model RegisterUserModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Areas/Identity/Pages/_AuthLayout.cshtml";
+}
+
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <fieldset style="margin-top: 3em;padding:3px;">
+        <legend>Registracija</legend>
+        <div class="form-group" style="float: none;">
+            <div class="form-group" style="display: inline;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Ime</label>
+                            <input asp-for="Input.FirstName" class="form-control" />
+                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                        </div><!-- .form-group -->
+                    </div><!-- .col-md-8 -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Prezime</label>
+                            <input asp-for="Input.LastName" class="form-control" />
+                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                        </div><!-- .form-group -->
+                    </div><!-- .col-md-8 -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Korisničko ime</label>
+                            <input asp-for="Input.UserName" class="form-control" />
+                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                        </div><!-- .form-group -->
+                    </div><!-- .col-md-8 -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input asp-for="Input.Email" class="form-control" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div><!-- .form-group -->
+                    </div><!-- .col-md-8 -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Lozinka</label>
+                            <input asp-for="Input.Password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div><!--.form-group -->
+                    </div><!-- .col-md-8 -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Ponovljena lozinka</label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div><!-- .form-group  -->
+                    </div><!-- .col-md-8  -->
+                </div><!-- .row -->
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Odjel</label>
+                            <select asp-for="Input.DepartmentId" asp-items="@(new SelectList(Model.Departments, "Value", "Text"))" class="form-control">
+                                <option value="">Odaberi odjel</option>
+                            </select>
+                            <span asp-validation-for="Input.DepartmentId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col">
+                                <button type="submit" class="btn btn-success" id="btnsignup" style="float: none;">Registracija</button>
+                            </div><!-- .col.md-12 -->
+                        </div><!-- .form-group -->
+                    </div><!-- .col-sm-6 -->
+                </div><!-- .row -->
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

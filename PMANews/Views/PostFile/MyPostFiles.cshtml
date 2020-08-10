@@ -1,0 +1,48 @@
+﻿@model IEnumerable<PMANews.Areas.Identity.Data.PostFile>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>Moji objavljeni PDF file-ovi</h4>
+<div class="container justify-content-md-center text-left col-md-8">
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Kolegij</th>
+                <th>Kategorija</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <a class="card-link text-success" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">
+                            @Html.DisplayFor(modelItem => item.Course.Name)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <a class="text-success" asp-action="DownloadFile" asp-route-filePath="@item.FilePath">Otvori</a> |
+                        @if (@ViewBag.User.UserName == item.Author.UserName)
+                        {
+                            //  @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                            <a class="text-danger" asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

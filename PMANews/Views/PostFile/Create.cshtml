@@ -1,0 +1,48 @@
+﻿@model PMANews.Areas.Identity.Data.PostFileVM
+
+@{
+    ViewData["Title"] = "Objavi pdf";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container justify-content-md-center text-left col-md-6">
+    <form method="post" enctype="multipart/form-data" asp-controller="PostFile" asp-action="Create">
+        <h4>Objavi PDF file</h4>
+        <!-- NASLOV input -->
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-4 control-label"></label>
+            <input asp-for="Title" type="text" class="form-control input-md">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <!-- KOLEGIJ select -->
+        <div class="form-group" hidden>
+            <label asp-for="CourseId" class="col-md-4 control-label"></label>
+            <select asp-for="CourseId" asp-items="ViewBag.CourseId" class="form-control"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <!-- KATEGORIJA select  -->
+        <div class="form-group">
+            <label asp-for="CategoryId" class="col-md-4 control-label"></label>
+            <select asp-for="CategoryId" asp-items="ViewBag.CategoryId" class="form-control"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+   
+        <div class="form-group">
+                <label>Odaberite .pdf datoteku</label>
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input asp-for="File" type="file" name="file" class="input-file custom-file-input" id="inputGroupFile02">
+                    <label class="custom-file-label" for="inputGroupFile02">Odaberi</label>
+                </div>
+                <div class="input-group-append">
+                    <input type="submit" class="input-group-text btn-success" id="save" value="Objavi">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

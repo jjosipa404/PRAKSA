@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Enrole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <form asp-action="Delete">
+        <label>Želite ukloniti ovaj kolegij iz svojih kolegija?</label>
+        <div class="form-group">
+            <input type="submit" value="Da" class="btn btn-danger" />
+        </div>
+        <a asp-action="MyCourses">Moji kolegiji</a>
+    </form>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

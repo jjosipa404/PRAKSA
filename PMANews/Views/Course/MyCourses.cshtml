@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PMANews.Areas.Identity.Data.CourseApplicationUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <a class="nav-link text-light" asp-controller="CourseApplicationUser" asp-action="EnroleCourse">+ Dodaj kolegij</a>
+</div>
+
+
+<div class="container-fluid justify-content-center text-left">
+    <div class="card-columns">
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.Course.ShortName)</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Course.Name)</h6>
+                    <a class="card-link text-success" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">Posjeti</a>
+                    <a class="card-link text-primary" asp-controller="CourseApplicationUser" asp-action="Delete" asp-route-id="@item.Id">Napusti</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@model PMANews.Areas.Identity.Data.Post
+@{
+    ViewData["Title"] = "Objavi post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container justify-content-md-center text-left col-md-6">
+    <h4 class="col-form-label">Nova objava</h4>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <!-- TITLE -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" asp-for="Title"></label>
+            <input class="form-control input-md" asp-for="Title" required="">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <!-- CONTENT -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" asp-for="Content"></label>
+            <textarea asp-for="Content" class="form-control" required="" style="height:300px;width:100%;"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <!-- CATEGORY -->
+        <div class="form-group">
+            <label asp-for="CourseId" class="control-label"></label>
+            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@Model.CourseId" class="btn btn-primary">Odustani</a>
+        </div>
+    </form>
+</div><!-- .container -->
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

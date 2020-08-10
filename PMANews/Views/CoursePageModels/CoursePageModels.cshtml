@@ -1,0 +1,109 @@
+﻿@model PMFNotes.Areas.Identity.Data.CoursePageModel
+
+@{
+    ViewData["Title"] = "Course Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+
+        <div class="col-md-3 card-deck">
+            <div class="card justify-content-center">
+                <div class="text-center mb-2 mt-2">
+                    <a asp-controller="PostFile" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
+                        <img src="~/img/pdf.png" asp-append-version="true" class="Img">
+                    </a>
+                </div>
+                <div class="card-body text-left">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a class="text-success text-decoration-none text-center" asp-controller="PostFile" asp-action="Create" asp-route-id="@ViewBag.courseID">
+                                Objavi PDF
+                            </a>
+                        </li>
+                        @if (Model.PostFiles.Count == 0 | Model.PostFiles == null)
+                        {
+                            <li class="list-group-item">
+                                <a class="text-muted text-decoration-none">  Nema file-ova. </a>
+                            </li>
+                        }
+                        @foreach (var item in Model.PostFiles)
+                        {
+                            <li class="list-group-item"> 
+                                <a class="text-info text-decoration-none" asp-controller="PostFile" asp-action="DownloadFile" asp-route-filePath="@item.FilePath">  @Html.DisplayFor(modelItem => item.Title) </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="container-fluid justify-content-center text-left">
+                <div class="card-header mb-2">
+                    @ViewBag.courseName -
+                    <a class="text-right text-success text-decoration-none" asp-controller="Posts" asp-action="Create"> Nova objava</a>
+                </div>
+                @if (Model.Posts.Count == 0 | Model.Posts == null)
+                {
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted"> Nema objava. </h6>
+                        </div><!-- .card-body -->
+                    </div><!-- .card -->
+                }
+                @foreach (var item in Model.Posts)
+                {
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h6 class="card-subtitle text-muted"> &commat;@Html.DisplayFor(modelItem => item.Author.UserName) - @Html.DisplayFor(modelItem => item.DateCreated)</h6>
+                            <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="card-link text-light">
+                                <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title) </h4>
+                            </a>
+                            <div class="card-text">@Html.DisplayFor(modelItem => item.Content)</div>
+                        </div><!-- .card-body -->
+                    </div><!-- .card -->
+                }
+            </div>
+        </div>
+
+
+        <div class="col-md-3 card-deck">
+            <div class="card justify-content-center">
+                <div class="text-center mb-2 mt-2">
+                    <a asp-controller="PostImage" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
+                        <img src="~/img/png.png" asp-append-version="true" class="Img">
+                    </a>
+                </div>
+                <div class="card-body text-left">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a class="text-success text-decoration-none text-center" asp-controller="PostImage" asp-action="Create" asp-route-id="@ViewBag.courseID">
+                                Objavi sliku
+                            </a>
+                        </li>
+                        @if (Model.PostImages.Count == 0 | Model.PostImages == null)
+                        {
+                            <li class="list-group-item">
+                                <a class="text-muted text-decoration-none">  Nema slika. </a>
+                            </li>
+                        }
+                        @foreach (var item in Model.PostImages)
+                        {
+                            <li class="list-group-item">
+                                <a class="text-info text-decoration-none" asp-controller="PostImage" asp-action="DownloadPngFileFromDB" asp-route-id="@item.Id">  @Html.DisplayFor(modelItem => item.Title) </a>
+                            </li>
+                        }
+                    </ul>
+                 </div>
+                </div>
+            </div>
+
+
+    </div>
+    <style type="text/css">
+        .Img {
+            max-height: 120px;
+            max-width: 120px;
+        }
+    </style>

@@ -1,0 +1,45 @@
+﻿@model PMANews.Areas.Identity.Data.PostImageVM
+
+@{
+    ViewData["Title"] = "Objavi sliku";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container justify-content-md-center text-left col-md-6">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <h4>Objavi sliku</h4>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group" hidden>
+            <label asp-for="CourseId" class="control-label"></label>
+            <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+            <span asp-validation-for="CourseId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="CategoryId" class="control-label"></label>
+            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+        <div class="form-group input-group">
+            <div class="custom-file">
+                <input type="file" id="files" asp-for="Image" class="custom-file-input" />
+                <label class="custom-file-label" for="files2">Odaberi .pdf</label>
+            </div>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-success" />
+            </div>
+</form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
