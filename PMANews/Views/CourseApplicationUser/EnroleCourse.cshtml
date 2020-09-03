@@ -1,15 +1,14 @@
 ﻿@model PMANews.Areas.Identity.Data.CourseApplicationUser
 
 @{
-    ViewData["Title"] = "EnroleCourse";
+    ViewData["Title"] = "Enrole Course";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 
 <div class="container">
-    <div class="card-columns">
-        <div class="card border-success mb-3" style="max-width: 30rem;">
+        <div class="card border-success mb-3">
             <form asp-action="EnroleCourse">
                 <div class="card-header">
                     <input type="submit" value="Dodaj" class="btn btn-success" />
@@ -20,11 +19,11 @@
                     <div class="form-group">
                         <label class="control-label">Odaberite kolegij kojeg želite dodati:</label>
                         <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+
                     </div>
                 </div>
             </form>
         </div>
-    </div>
 </div>
 
 

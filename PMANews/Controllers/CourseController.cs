@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PMANews.Areas.Identity.Data;
 using PMANews.Data;
@@ -25,7 +26,7 @@ namespace PMANews.Controllers
         }
 
         // GET: /Course/IndexAll
-        public async Task<IActionResult> IndexAll()
+        public async Task<IActionResult> Index()
         {
             //popis svih kolegija
             var listCourses = _context.Course.Include(c => c.Department);
@@ -36,18 +37,6 @@ namespace PMANews.Controllers
             return View(await listCourses.ToListAsync());
         }
 
-        // GET: /Course/1
-        public async Task<IActionResult> Index(int id)//courseId
-        {
-            //popis postova po kolegiju
-            var posts = _context.Post
-                .Include(p => p.Course)
-                .Include(p => p.Author)
-                .Where(p => p.CourseId == id)
-                .OrderByDescending(p => p.DateCreated);
-            ViewBag.courseID = id;
-            return View(await posts.ToListAsync());
-        }
 
         // GET: /Course/MyCourses
         public async Task<IActionResult> MyCourses()
@@ -63,7 +52,68 @@ namespace PMANews.Controllers
             return View(await listCourses.ToListAsync());
         }
 
+        // GET: Course/Create
+        public IActionResult Create()
+        {
+            ViewData["DepartmentId"] = new SelectList(_context.Set<Department>(), "Id", "Name");
+            return View();
+        }
 
-       
+        // POST: Course/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,ShortName,DepartmentId")] Course course)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+            ApplicationUser appUser = await _userManager.GetUserAsync(User);
+
+            var dep = _context.Department.Where(d => d.Id == course.DepartmentId).FirstOrDefault();
+            course.Department = dep;
+
+            ViewBag.depid = course.DepartmentId;
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(course);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Courses", "Department", new { id = course.DepartmentId });
+
+            }
+
+            ViewData["DepartmentId"] = new SelectList(_context.Set<Department>(), "Id", "Name", course.Department.Name);
+            return View(course);
+
+        }
+
+        // GET: Course/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var course = await _context.Course.FirstOrDefaultAsync(m => m.Id == id);
+            if (course == null)
+            {
+                return NotFound();
+            }
+            return View(course);
+        }
+
+        // POST: Course/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var course = await _context.Course.FindAsync(id);
+            var depId = course.DepartmentId;
+            _context.Course.Remove(course);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Courses", "Department", new { id = depId });
+
+        }
+
+
     }
 }

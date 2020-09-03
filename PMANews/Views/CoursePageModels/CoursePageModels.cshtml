@@ -17,7 +17,7 @@
                 <div class="card-body text-left">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <a class="text-success text-decoration-none text-center" asp-controller="PostFile" asp-action="Create" asp-route-id="@ViewBag.courseID">
+                            <a class="text-success text-decoration-none text-center" asp-controller="PostFile" asp-action="Create" asp-route-courseid="@ViewBag.courseID">
                                 Objavi PDF
                             </a>
                         </li>
@@ -42,7 +42,7 @@
             <div class="container-fluid justify-content-center text-left">
                 <div class="card-header mb-2">
                     @ViewBag.courseName -
-                    <a class="text-right text-success text-decoration-none" asp-controller="Posts" asp-action="Create"> Nova objava</a>
+                    <a class="text-right text-success text-decoration-none" asp-controller="Posts" asp-action="Create" asp-route-courseid="@ViewBag.courseID"> Nova objava</a>
                 </div>
                 @if (Model.Posts.Count == 0 | Model.Posts == null)
                 {

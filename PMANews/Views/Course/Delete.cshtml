@@ -1,15 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Enrole";
+﻿@model PMANews.Areas.Identity.Data.Course
+@{
+    ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <form asp-action="Delete">
-        <label>Želite ukloniti ovaj kolegij iz svojih kolegija?</label>
-        <div class="form-group">
-            <input type="submit" value="Da" class="btn btn-danger" />
+
+<div class="container justify-content-md-center text-center col-md-6">
+    <div class="card border-danger">
+        <div class="card-header">
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Obriši" class="btn btn-danger" />
+                <a asp-controller="Department" asp-action="Courses" asp-route-id="@Model.DepartmentId" class="btn btn-secondary">Odustani</a>
+            </form>
         </div>
-        <a asp-action="MyCourses">Moji kolegiji</a>
-    </form>
+        <div class="card-body">
+            <h4 class="card-title">Sigurno želite obrisati kolegij @Model.Name ?</h4>
+        </div>
+    </div>
+</div>
 
 
 

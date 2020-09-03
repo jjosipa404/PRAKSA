@@ -6,14 +6,16 @@
 }
 
 
-
 <div class="container justify-content-md-center text-center col-md-6">
-    <h4>Sigurno želite obrisati ovaj komentar?</h4>
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group ">
-            <input type="submit" value="Obriši" class="btn btn-danger" /> 
-            <a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-primary">Odustani</a>
+    <div class="card border-danger">
+        <div class="card-header">
+            <form asp-action="Delete">
+                <input type="submit" value="Obriši" class="btn btn-danger" />
+                <a asp-controller="Posts" asp-action="Details" asp-route-id="@Model.PostId" class="btn btn-secondary">Odustani</a>
+            </form>
         </div>
-    </form>
+        <div class="card-body">
+            <h4 class="card-title">Sigurno želite obrisati ovaj komentar?</h4>
+        </div>
+    </div>
 </div>

@@ -26,20 +26,13 @@ namespace PMANews.Controllers
         }
 
 
-        // GET: /Department
-        public async Task<IActionResult> Index()
-        {
-            var Context = await _context.Department.OrderBy(p => p.Name).ToListAsync();
-            Context.RemoveAt(0);
-            return View(Context);
-        }
-
         // GET: /Department/IndexCourses/1
-        public async Task<IActionResult> IndexCourses(int id)
+        public async Task<IActionResult> Courses(int id) //id odjela(DepartmentId)
         {           
             ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
             var listCourses = _context.Course.Where(c => c.DepartmentId == id).OrderBy(c => c.Name);
             ViewBag.departmentName = _context.Department.Where(d => d.Id == id).FirstOrDefault().Name;
+            ViewBag.depid = id;
             if(listCourses == null)
             {
                 return RedirectToAction(nameof(Index));

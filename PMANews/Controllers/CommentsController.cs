@@ -25,62 +25,8 @@ namespace PMANews.Controllers
             _userManager = userManager;
         }
 
-        [AllowAnonymous]
-        // GET: Comments
-        public async Task<IActionResult> Index(int id)
-        {
-            ViewBag.PostID = id;
-            var pMANewsContext = _context.Comment.Include(c => c.Post).Include(c => c.User).Where(c => c.PostId == id).OrderByDescending(c => c.DateCreated);
-            return View(await pMANewsContext.ToListAsync());
-        }
 
-        [AllowAnonymous]
-        // GET: Comments/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var comment = await _context.Comment
-                .Include(c => c.Post)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-            return View(comment);
-        }
-
-        // GET: Comments/Create
-        public IActionResult Create(int id)
-        {
-            return View();
-        }
-
-        // POST: Comments/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CommContent")] Comment comment, int postid)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-            ApplicationUser appUser = await _userManager.GetUserAsync(User);
-            comment.User = appUser;
-            comment.UserId = userId;
-            comment.PostId = postid;
-            comment.Post = _context.Post.Include(p => p.Author).Include(p => p.Course).Where(p => p.Id == postid).FirstOrDefault();
-
-            if (ModelState.IsValid)
-            {
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", postid);
-            }
       
-            return View(comment);
-        }
-
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -98,7 +44,6 @@ namespace PMANews.Controllers
             ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.UserId);
             return View(comment);
         }
-
 
         // POST: Comments/Edit/5
         [HttpPost]
@@ -130,6 +75,7 @@ namespace PMANews.Controllers
                     }
                 }
                 return RedirectToAction("Details", "Posts", new { id = comment.PostId });
+
             }
             ViewData["PostId"] = new SelectList(_context.Set<Post>(), "Id", "Id", comment.PostId);
             ViewData["UserId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "Id", comment.UserId);
@@ -162,9 +108,11 @@ namespace PMANews.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var comment = await _context.Comment.FindAsync(id);
+            var postid = comment.PostId;
             _context.Comment.Remove(comment);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Posts", new { id = postid });
+
         }
 
         private bool CommentExists(int id)

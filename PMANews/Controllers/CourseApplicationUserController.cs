@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MvcContrib.UI.DataList;
 using PMANews.Areas.Identity.Data;
 using PMANews.Data;
 
@@ -36,17 +37,43 @@ namespace PMANews.Controllers
             return View(await listCourses.ToListAsync());
         }
 
-        public IActionResult EnroleCourse(int? courseId)
+        public IActionResult EnroleCourse(int courseid)
         {
-            
-            ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name");
+           // ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name");
+
+            var groups = new List<SelectListGroup> 
+            {
+                new SelectListGroup { Name = "Biologija" },
+                new SelectListGroup { Name = "Fizika" },
+                new SelectListGroup { Name = "Informatika" },
+                new SelectListGroup { Name = "Kemija" },
+                new SelectListGroup { Name = "Matematika" },
+                new SelectListGroup { Name = "Politehnika" }
+            };
+            var contextCourses = _context.Set<Course>().Include(c => c.Department).ToList();
+            var courses = new List<SelectListItem>();
+
+            foreach(var c in contextCourses)
+            {
+                var course = new SelectListItem { Value = c.Id.ToString(), Text = c.Name};
+                foreach(var g in groups)
+                {
+                    if(g.Name.ToLower() == c.Department.Name.ToLower())
+                    {
+                        course.Group = g;
+                    }
+                }
+                courses.Add(course);
+            }
+
+            ViewData["CourseId"] = courses;
             return View();
         }
 
         // POST: Course/EnroleCourse/2
         [HttpPost, ActionName("EnroleCourse")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnroleCourse([Bind("CourseId")] CourseApplicationUser cu)
+        public async Task<IActionResult> EnroleCourse([Bind("CourseId")] CourseApplicationUser cu, int courseid)
         {
 
             ApplicationUser appUser = await _userManager.GetUserAsync(User);
@@ -66,12 +93,43 @@ namespace PMANews.Controllers
                 return RedirectToAction("MyCourses", "Course");
             }
 
-            ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name", cu.Course.Name);
+  
+            var groups = new List<SelectListGroup>
+            {
+                new SelectListGroup { Name = "Biologija" },
+                new SelectListGroup { Name = "Fizika" },
+                new SelectListGroup { Name = "Informatika" },
+                new SelectListGroup { Name = "Kemija" },
+                new SelectListGroup { Name = "Matematika" },
+                new SelectListGroup { Name = "Politehnika" }
+            };
+            var contextCourses = _context.Set<Course>().Include(c => c.Department).ToList();
+            var courses = new List<SelectListItem>();
+
+            foreach (var c in contextCourses)
+            {
+                var course = new SelectListItem { Value = c.Id.ToString(), Text = c.Name };
+                foreach (var g in groups)
+                {
+                    if (g.Name.ToLower() == c.Department.Name.ToLower())
+                    {
+                        course.Group = g;
+                    }
+                }
+                if(c.Id == courseid)
+                {
+                    course.Selected = true;
+                }
+                courses.Add(course);
+            }
+
+            ViewData["CourseId"] = courses;
+            
+            
             return View(cu);
         }
 
-
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> QuitCourse(int? id)
         {
             if (id == null)
             {
@@ -86,7 +144,7 @@ namespace PMANews.Controllers
         }
 
         // POST: Course/QuitCourse/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("QuitCourse")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

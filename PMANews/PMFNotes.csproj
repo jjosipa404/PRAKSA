@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Views\Department\background.jpg" />
+    <Compile Remove="wwwroot\images\**" />
+    <Content Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <None Remove="wwwroot\images\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,11 +23,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="MvcContrib" Version="2.0.95" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\files\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
   <ItemGroup>

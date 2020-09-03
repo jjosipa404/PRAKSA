@@ -1,0 +1,24 @@
+﻿@model PMANews.Areas.Identity.Data.CourseApplicationUser
+
+@{
+    ViewData["Title"] = "Quit Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container justify-content-md-center text-center col-md-6">
+    <div class="card border-danger">
+        <div class="card-header">
+            <form asp-action="QuitCourse">
+                <input type="submit" value="Napusti" class="btn btn-danger" />
+                <a class="btn btn-secondary" asp-controller="Course" asp-action="MyCourses">Odustani</a>
+            </form>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">Napusti kolegij <b>@Model.Course.Name</b></h4>
+            <p class="card-text">Ovime ćete napustiti kolegij i nećete moći vidjeti dijeljene bilješke i materijale tog kolegija.</p>
+        </div>
+    </div>
+</div>
+
+

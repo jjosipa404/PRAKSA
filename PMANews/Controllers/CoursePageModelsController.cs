@@ -34,7 +34,7 @@ namespace PMFNotes.Controllers
             else
             {
                 ViewBag.IsEnroled = false;
-                return RedirectToAction("EnroleCourse", "CourseApplicationUser");
+                return RedirectToAction("EnroleCourse", "CourseApplicationUser", new { courseid = id });
             }
 
             ViewBag.courseID = id;
@@ -62,20 +62,7 @@ namespace PMFNotes.Controllers
                 .OrderByDescending(p => p.DateCreated)
                 .ToList();
 
-            if(models.PostImages.Count > 5)
-            {
-                models.PostImages.RemoveRange(5, models.PostImages.Count - 5);
-
-            }
-            if(models.PostFiles.Count > 5)
-            {
-                models.PostFiles.RemoveRange(5, models.PostFiles.Count - 5);
-
-            }
-
-
             return View(models);
-
         }
 
         public bool IsEnroled(ApplicationUser user, int courseId)

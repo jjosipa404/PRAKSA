@@ -103,7 +103,7 @@ namespace PMANews.Controllers
         // POST: PostFile/Create/2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,CategoryId,File")] PostFileVM post, int id)
+        public async Task<IActionResult> Create([Bind("Title,CategoryId,File")] PostFileVM post, int courseid)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
@@ -112,7 +112,7 @@ namespace PMANews.Controllers
             post.Author = appUser;
             post.AuthorId = userId;
 
-            post.CourseId = id;
+            post.CourseId = courseid;
 
             //upload files to wwwroot
             var fileName = Path.GetFileName(post.File.FileName);

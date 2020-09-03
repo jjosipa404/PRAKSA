@@ -25,15 +25,7 @@ namespace PMANews.Controllers
             _userManager = userManager;
         }
 
-        [AllowAnonymous]
-        // GET: /Posts
-        public async Task<IActionResult> Index()
-        {
-            var pMANewsContext = _context.Post.Include(p => p.Course).Include(p => p.Author).OrderByDescending(p => p.DateCreated);  
-            return View(await pMANewsContext.ToListAsync());
-        }
-
-
+       
         [AllowAnonymous]
         // GET: Posts/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -64,16 +56,18 @@ namespace PMANews.Controllers
         }
 
         // GET: Posts/Create
-        public IActionResult Create()
+        public IActionResult Create(int courseid)
         {
             ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name");
+            ViewBag.cid = courseid;
+
             return View();
         }
 
         // POST: Posts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Content,CourseId")] Post post)
+        public async Task<IActionResult> Create([Bind("Id,Title,Content")] Post post, int courseid)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
@@ -82,11 +76,17 @@ namespace PMANews.Controllers
             post.Author = appUser;
             post.AuthorId = userId;
 
+            var course = await _context.Course.Where(c => c.Id == courseid).FirstOrDefaultAsync();
+            post.Course = course;
+            post.CourseId = course.Id;
+            ViewBag.cid = courseid;
+
             if (ModelState.IsValid)
             {
                 _context.Add(post);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("CoursePageModels", "CoursePageModels", new { id = courseid });
+
             }
             ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name", post.Course.Name);
             return View(post);
@@ -146,7 +146,8 @@ namespace PMANews.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("CoursePageModels", "CoursePageModels", new { id = post.CourseId });
+
             }
             ViewData["CourseId"] = new SelectList(_context.Set<Course>(), "Id", "Name", post.Course.Name);
             ViewData["AuthorId"] = new SelectList(_context.Set<ApplicationUser>(), "Id", "UserName", post.Author.UserName);
@@ -179,9 +180,11 @@ namespace PMANews.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var post = await _context.Post.FindAsync(id);
+            var courseID = post.CourseId;
             _context.Post.Remove(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("CoursePageModels", "CoursePageModels", new { id = courseID });
+
         }
 
         private bool PostExists(int id)

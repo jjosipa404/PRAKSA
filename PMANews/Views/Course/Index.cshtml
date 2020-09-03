@@ -1,63 +1,43 @@
-﻿@model IEnumerable<PMANews.Areas.Identity.Data.Post>
+﻿@model IEnumerable<PMANews.Areas.Identity.Data.Course>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <div class="row">
-        <div class="col-md-8">
-            <div class="container-fluid justify-content-center text-left">
 
-                <div class="card-header mb-2">@Model.First().Course.Name</div>
-                    @foreach (var item in Model)
-                    {
-                        <div class="card mb-2">
-                            <div class="card-body">
-                                <h6 class="card-subtitle text-muted"> &commat;@Html.DisplayFor(modelItem => item.Author.UserName) - @Html.DisplayFor(modelItem => item.DateCreated)</h6>
-                                <a asp-controller="Posts" asp-action="Details" asp-route-id="@item.Id" class="card-link text-light">
-                                    <h4 class="card-title"> @Html.DisplayFor(modelItem => item.Title) </h4>
-                                </a>
-                                <div class="card-text">@Html.DisplayFor(modelItem => item.Content)</div>
-                            </div><!-- .card-body -->
-                        </div><!-- .card -->
-                    }
-                </div>
+    <div class="container justify-content-md-center text-left col-sm-8">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Popis svih kolegija PMF-a
+                    </th>
+                    <th>
+                        Odjel
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Id" class="text-decoration-none text-light"> @Html.DisplayFor(modelItem => item.Name) </a>
+                        </td>
+                        <td>
+                            <a asp-controller="Department" asp-action="Courses" asp-route-id="@item.DepartmentId" class="text-decoration-none text-light"> @Html.DisplayFor(modelItem => item.Department.Name) </a>
+                        </td>
+                        <td>
+                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@item.Id" class="text-decoration-none text-light">Izbriši kolegij</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
         </div>
-       
-        <div class="col-md-4 card-deck">
-            <div class="card justify-content-center">
-                <div class="card-header">
-                    <a asp-controller="PostFile" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
-
-                        <p class="btn btn-link text-muted" style="text-decoration:none;">Dokumenti</p>
-                    </a>
-                </div>
-                <div class="card-body text-center">
-                    <a asp-controller="PostFile" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
-                        <img src="~/img/pdf.png" asp-append-version="true" class="Img">
-                    </a>
-                </div>
-            </div>
-            <div class="card justify-content-center">
-                <div class="card-header">
-                    <a asp-controller="PostImage" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
-
-                        <p class="btn btn-link text-muted" style="text-decoration:none;">Slike</p>
-                    </a>
-                </div>
-                <div class="card-body text-center">
-                    <a asp-controller="PostImage" asp-action="IndexCourse" asp-route-id="@ViewBag.courseID">
-                        <img src="~/img/png.png" asp-append-version="true" class="Img">
-                    </a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <style type="text/css">
-    .Img {
-        max-height: 120px;
-        max-width: 120px;
-    }
-
-    </style>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
