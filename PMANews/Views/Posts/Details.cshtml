@@ -13,7 +13,7 @@
         @if (@UserManager.GetUserName(User) == @Model.Author.UserName)
         {
             <div class="row">
-                <a class="card-link text-success" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
+                <a class="card-link text-success text-muted" asp-action="Edit" asp-route-id="@Model.Id">Uredi</a>
                 <a class="card-link text-danger text-muted" asp-action="Delete" asp-route-id="@Model.Id">Obriši</a>
             </div>
         }
@@ -21,8 +21,8 @@
         <div class="row">
             <div class="blog-main">
                 <div class="blog-post">
-                    <h4 class="blog-post-title" id="title"> @Html.DisplayFor(model => model.Title) </h4>
-                    <p class="blog-post-meta" id="date"> @Html.DisplayFor(model => model.DateCreated) by &commat;@Html.DisplayFor(model => model.Author.UserName) </p>
+                    <h3 class="blog-post-title" id="title"> @Html.DisplayFor(model => model.Title) </h3>
+                    <small class="blog-post-meta text-muted" id="date"> @Html.DisplayFor(model => model.DateCreated) by &commat;@Html.DisplayFor(model => model.Author.UserName) </small>
                     <hr>
                     <p id="content">  @Html.DisplayFor(model => model.Content) </p>
                 </div><!-- /.blog-post -->
@@ -49,7 +49,7 @@
         <div id="@string.Format("{0}_{1}","commentsBlock", @Model.Id)"></div>
     </div><!-- col-sm-8 -->
 </div>
-
+<br /><br /><br />
 
 <script type="text/javascript">
     'use strict';

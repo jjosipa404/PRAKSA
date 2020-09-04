@@ -5,64 +5,58 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Objavljene slike</h1>
+<!--
+<div class="card-columns">
+    @foreach (var item in Model)
+    {
+        <div class="card mb-3">
+            <a asp-action="DownloadPngFileFromDB" asp-route-id="@item.Id">
+                <img alt="image" src="@string.Format("{0},{1}","data:image/png;base64", Convert.ToBase64String(item.Image, 0, item.Image.Length))" style="height:200px;width:100%;display:block;" />
+            </a>
+            <div class="card-footer">
+                @Html.DisplayFor(model => item.Title)
+            </div>
+        </div>
+    }
+</div>
+-->
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuthorId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Course.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                <a asp-action="Details" asp-route-id="@item.Id"> Details  </a> |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+<div class="container justify-content-md-center text-left col-sm-8">
+    <div class="container-fluid text-center">
+        <a class="btn btn-outline-success w-100 mb-2" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@ViewBag.course.Id">
+            @ViewBag.course.Name
+        </a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th> @Html.DisplayNameFor(model => model.Title)</th>
+                <th> @Html.DisplayNameFor(model => model.DateCreated)</th>
+                <th>@Html.DisplayNameFor(model => model.CategoryId)</th>
+                <th> @Html.DisplayNameFor(model => model.AuthorId) </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Author.UserName)</td>
+                    <td>
+                        <a class="text-success text-decoration-none text-muted" asp-action="DownloadPngFileFromDB" asp-route-id="@item.Id">Otvori</a> 
+                        @if (@ViewBag.User.UserName == item.Author.UserName)
+                        {
+                            <a class="text-danger text-decoration-none text-muted" asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+

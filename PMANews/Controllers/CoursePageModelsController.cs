@@ -40,6 +40,8 @@ namespace PMFNotes.Controllers
             ViewBag.courseID = id;
             ViewBag.courseName = _context.Course.Where(c => c.Id == id).FirstOrDefault().Name;
 
+            ViewBag.courseUserId = _context.CourseApplicationUser.Where(cu => cu.CourseId == id & cu.ApplicationUserId == appUser.Id).FirstOrDefault().Id;
+
             CoursePageModel models = new CoursePageModel();
             models.Posts = _context.Post
                 .Include(p => p.Author)

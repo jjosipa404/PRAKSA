@@ -30,21 +30,8 @@ namespace PMANews.Controllers
             _hostingEnv = hostingEnv;
         }
 
-  
-        // GET: /PostFile/Index
-        public async Task<IActionResult> Index()
-        {
-            ViewBag.User = await _userManager.GetUserAsync(User);
-            var pMANewsContext = _context.PostFile
-                .Include(p => p.Course)
-                .Include(p => p.Category)
-                .Include(p => p.Author)
-                .OrderBy(p => p.Course.Name);
-            return View(await pMANewsContext.ToListAsync());
-        }
-
-        // GET: /PostFile/IndexCourse/2
-        public async Task<IActionResult> IndexCourse(int id)
+        // GET: /PostFile/Index/2
+        public async Task<IActionResult> Index(int id)
         {
             ViewBag.User = await _userManager.GetUserAsync(User);
             ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
@@ -105,6 +92,11 @@ namespace PMANews.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,CategoryId,File")] PostFileVM post, int courseid)
         {
+            if(post.Title == null || post.File == null)
+            {
+                return RedirectToAction("Create", "PostFile", new { courseid = courseid });
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
             ApplicationUser appUser = await _userManager.GetUserAsync(User);

@@ -28,20 +28,15 @@ namespace PMANews.Controllers
             _userManager = userManager;
         }
 
-        [AllowAnonymous]
-        // GET: /PostImage
-        public async Task<IActionResult> Index()
-        {
-            var pMANewsContext = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).OrderByDescending(p => p.DateCreated);
-            return View(await pMANewsContext.ToListAsync());
-        }
-
+      
 
         [AllowAnonymous]
         // GET: /PostImage
-        public async Task<IActionResult> IndexCourse(int id)
+        public async Task<IActionResult> Index(int id)
         {
             var pMANewsContext = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).Where(i => i.CourseId == id).OrderByDescending(p => p.DateCreated);
+            ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
+            ViewBag.User = await _userManager.GetUserAsync(User);
             return View(await pMANewsContext.ToListAsync());
         }
 

@@ -11,7 +11,7 @@
         <div class="card-header">
             <form asp-action="QuitCourse">
                 <input type="submit" value="Napusti" class="btn btn-danger" />
-                <a class="btn btn-secondary" asp-controller="Course" asp-action="MyCourses">Odustani</a>
+                <a class="btn btn-secondary" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@Model.CourseId">Odustani</a>
             </form>
         </div>
         <div class="card-body">

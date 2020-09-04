@@ -6,23 +6,29 @@
 }
 
 <div>
-    <a class="nav-link text-light" asp-controller="CourseApplicationUser" asp-action="EnroleCourse">+ Dodaj kolegij</a>
+    <a class="nav-link text-success text-muted" asp-controller="CourseApplicationUser" asp-action="EnroleCourse">+ Dodaj kolegij</a>
 </div>
 
 
-<div class="container-fluid justify-content-center text-left">
-    <div class="card-columns">
-        @foreach (var item in Model)
-        {
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.Course.ShortName)</h4>
-                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Course.Name)</h6>
-                    <a class="card-link text-success" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">Posjeti</a>
-                    <a class="card-link text-primary" asp-controller="CourseApplicationUser" asp-action="QuitCourse" asp-route-id="@item.Id">Napusti</a>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="container-fluid justify-content-center text-left">
+            @foreach (var item in Model)
+            {
+                <div class="card">
+                    <a class="text-decoration-none text-light" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">
+                        <div class="card-body">
+                            <h4 class="card-title text-success font-weight-bold">@Html.DisplayFor(modelItem => item.Course.ShortName)</h4>
+                            <h4 class="card-title mb-2 text-muted">@Html.DisplayFor(modelItem => item.Course.Name)</h4>
+                        </div>
+                      </a>
                 </div>
-            </div>
-        }
+            }
+        
+        </div>
     </div>
+    <div class="col-md-4"></div>
 </div>
+
 
