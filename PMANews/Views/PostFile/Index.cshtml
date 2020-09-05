@@ -30,11 +30,11 @@
                         <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.Author.UserName)</td>
                         <td>
-                            <a class="text-success text-muted" asp-action="DownloadFile" asp-route-filePath="@item.FilePath">Otvori</a> 
+                            <a class="text-success text-muted text-decoration-none" asp-action="DownloadFile" asp-route-filePath="@item.FilePath">Otvori</a> 
                             @if (@ViewBag.User.UserName == item.Author.UserName)
                             {
                                 //  @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                                <a class="text-danger text-muted" asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
+                                <a class="text-danger text-muted text-decoration-none" asp-action="Delete" asp-route-id="@item.Id">Obriši</a>
                             }
                         </td>
                     </tr>

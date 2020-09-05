@@ -29,7 +29,7 @@ namespace PMANews.Controllers
         public async Task<IActionResult> Index()
         {
             //popis svih kolegija
-            var listCourses = _context.Course.Include(c => c.Department);
+            var listCourses = _context.Course.Include(c => c.Department).OrderBy(c => c.Department.Name);
             if (listCourses == null)
             {
                 return RedirectToAction("Index","Home");
@@ -49,6 +49,7 @@ namespace PMANews.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.UserRole = _context.ApplicationUser.Where(u => u.Id == user.Id).Include(u => u.Role).FirstOrDefault().Role.Name;
             return View(await listCourses.ToListAsync());
         }
 
@@ -77,7 +78,7 @@ namespace PMANews.Controllers
             {
                 _context.Add(course);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Courses", "Department", new { id = course.DepartmentId });
+                return RedirectToAction("Index", "Course");
 
             }
 
@@ -86,6 +87,7 @@ namespace PMANews.Controllers
 
         }
 
+      
         // GET: Course/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -101,6 +103,8 @@ namespace PMANews.Controllers
             return View(course);
         }
 
+
+
         // POST: Course/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -110,7 +114,7 @@ namespace PMANews.Controllers
             var depId = course.DepartmentId;
             _context.Course.Remove(course);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Courses", "Department", new { id = depId });
+            return RedirectToAction("Index", "Course");
 
         }
 

@@ -14,7 +14,9 @@
                     <th>
                         Odjel
                     </th>
-                    <th></th>
+                    <th>
+                        <a class="text-success text-decoration-none" asp-controller="Course" asp-action="Create"> Dodaj kolegij </a>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -22,13 +24,13 @@
                 {
                     <tr>
                         <td>
-                            <a asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Id" class="text-decoration-none text-light"> @Html.DisplayFor(modelItem => item.Name) </a>
+                            <a asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Id" class="text-decoration-none text-warning text-muted"> @Html.DisplayFor(modelItem => item.Name) </a>
                         </td>
                         <td>
-                            <a asp-controller="Department" asp-action="Courses" asp-route-id="@item.DepartmentId" class="text-decoration-none text-light"> @Html.DisplayFor(modelItem => item.Department.Name) </a>
+                            <a asp-controller="Department" asp-action="Courses" asp-route-id="@item.DepartmentId" class="text-decoration-none text-success text-muted"> @Html.DisplayFor(modelItem => item.Department.Name) </a>
                         </td>
                         <td>
-                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@item.Id" class="text-decoration-none text-light">Izbriši kolegij</a>
+                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@item.Id" class="text-decoration-none text-danger text-muted">Izbriši kolegij</a>
                         </td>
                     </tr>
                 }

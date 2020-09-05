@@ -1,34 +1,49 @@
 ﻿@model IEnumerable<PMANews.Areas.Identity.Data.CourseApplicationUser>
+@using PMANews.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    <a class="nav-link text-success text-muted" asp-controller="CourseApplicationUser" asp-action="EnroleCourse">+ Dodaj kolegij</a>
-</div>
+@if (@ViewBag.UserRole == "admin")
+{
+    <div>
+        <a class="btn btn-secondary" asp-controller="Course" asp-action="Index"> Svi kolegiji </a>
+    </div>
+}
+
+
+
+    <div>
+        <a class="nav-link text-success text-muted" asp-controller="CourseApplicationUser" asp-action="EnroleCourse">+ Dodaj kolegij</a>
+    </div>
 
 
 <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
+    <div class="col-md-2"></div>
+    <div class="col">
         <div class="container-fluid justify-content-center text-left">
             @foreach (var item in Model)
             {
-                <div class="card">
-                    <a class="text-decoration-none text-light" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">
+                <div class="card mb-2">
+                    <a class="text-decoration-none text-light list-group-item-action" asp-controller="CoursePageModels" asp-action="CoursePageModels" asp-route-id="@item.Course.Id">
                         <div class="card-body">
                             <h4 class="card-title text-success font-weight-bold">@Html.DisplayFor(modelItem => item.Course.ShortName)</h4>
                             <h4 class="card-title mb-2 text-muted">@Html.DisplayFor(modelItem => item.Course.Name)</h4>
                         </div>
-                      </a>
+                    </a>
                 </div>
             }
-        
+
         </div>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
 </div>
 
 

@@ -90,11 +90,11 @@ namespace PMANews.Controllers
         // POST: PostFile/Create/2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,CategoryId,File")] PostFileVM post, int courseid)
+        public async Task<IActionResult> Create([Bind("Title,CourseId,CategoryId,File")] PostFileVM post)
         {
             if(post.Title == null || post.File == null)
             {
-                return RedirectToAction("Create", "PostFile", new { courseid = courseid });
+                return RedirectToAction("Create", "PostFile");
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -103,8 +103,6 @@ namespace PMANews.Controllers
 
             post.Author = appUser;
             post.AuthorId = userId;
-
-            post.CourseId = courseid;
 
             //upload files to wwwroot
             var fileName = Path.GetFileName(post.File.FileName);
@@ -175,10 +173,11 @@ namespace PMANews.Controllers
             var post = await _context.PostFile.FindAsync(id);
             _context.PostFile.Remove(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "PostFile", new { id = post.CourseId });
+
         }
 
-      
+
 
 
     }

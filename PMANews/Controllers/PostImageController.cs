@@ -31,8 +31,8 @@ namespace PMANews.Controllers
       
 
         [AllowAnonymous]
-        // GET: /PostImage
-        public async Task<IActionResult> Index(int id)
+        // GET: /PostImage/Index/2
+        public async Task<IActionResult> Index(int id)  //course.Id
         {
             var pMANewsContext = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).Where(i => i.CourseId == id).OrderByDescending(p => p.DateCreated);
             ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
@@ -77,19 +77,20 @@ namespace PMANews.Controllers
         // POST: PostImage/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,CategoryId")] PostImageVM post, List<IFormFile> Image, int id)
+        public async Task<IActionResult> Create([Bind("Title,CourseId,CategoryId")] PostImageVM post, List<IFormFile> Image)
         {
+            if(post.Title == null || Image == null)
+            {
+                return RedirectToAction("Create", "PostImage" );
+            }
+
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
             ApplicationUser appUser = await _userManager.GetUserAsync(User);
 
             post.Author = appUser;
             post.AuthorId = userId;
-
-            post.CourseId = id;
-            post.Course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
-
-            
 
             PostImage _post = new PostImage
             {
@@ -156,7 +157,8 @@ namespace PMANews.Controllers
             var post = await _context.PostImage.FindAsync(id);
             _context.PostImage.Remove(post);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "PostImage", new { id = post.CourseId });
+
         }
 
         [HttpGet]

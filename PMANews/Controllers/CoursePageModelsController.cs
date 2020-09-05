@@ -24,7 +24,7 @@ namespace PMFNotes.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> CoursePageModels(int id)
+        public async Task<IActionResult> CoursePageModels(int id) //course.Id
         {
             ApplicationUser appUser = await _userManager.GetUserAsync(User);
             if (IsEnroled(appUser, id))
@@ -39,7 +39,6 @@ namespace PMFNotes.Controllers
 
             ViewBag.courseID = id;
             ViewBag.courseName = _context.Course.Where(c => c.Id == id).FirstOrDefault().Name;
-
             ViewBag.courseUserId = _context.CourseApplicationUser.Where(cu => cu.CourseId == id & cu.ApplicationUserId == appUser.Id).FirstOrDefault().Id;
 
             CoursePageModel models = new CoursePageModel();

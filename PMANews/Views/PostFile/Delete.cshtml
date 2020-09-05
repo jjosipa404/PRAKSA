@@ -12,7 +12,7 @@
             <form asp-action="Delete">
                 <input type="hidden" asp-for="Id" />
                 <input type="submit" value="Obriši" class="btn btn-danger" />
-                <a asp-controller="PostFile" asp-action="MyPostFiles" class="btn btn-secondary">Odustani</a>
+                <a asp-controller="PostFile" asp-action="Index" asp-route-id="@Model.CourseId" class="btn btn-secondary">Odustani</a>
             </form>
         </div>
         <div class="card-body">
