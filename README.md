@@ -13,8 +13,11 @@ Projekt kolegija Informaticka praksa 2019/2020
 
 ![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(252).png)
 ![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(485).png)
-![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(484).png)
+![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(481).png)
 ![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(345).png)
+
+![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(483).png)
+![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(484).png)
 
 ![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(348).png)
 ![GitHub Logo](https://github.com/jjosipa404/PRAKSA/blob/master/Screenshots/Snimka%20zaslona%20(453).png)
