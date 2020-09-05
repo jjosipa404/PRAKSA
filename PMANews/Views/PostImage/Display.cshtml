@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PMANews.Areas.Identity.Data.PostImage>
+
+@{
+    ViewData["Title"] = "Display";
+    Layout = "~/Views/Shared/_LayoutNoNav.cshtml";
+}
+
+
+    <div id="carouselExampleControls" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="text-light">@Model.First().Title</div>
+                <a asp-action="DownloadPngFileFromDB" asp-route-id="@Model.First().Id">
+                    <img class="w-75 h-75" alt="image" src="@string.Format("{0},{1}","data:image/png;base64", Convert.ToBase64String(Model.First().Image, 0, Model.First().Image.Length))" />
+                </a>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item">
+                    <div class="text-light">@item.Title</div>
+                    <a asp-action="DownloadPngFileFromDB" asp-route-id="@item.Id">
+                        <img class="w-75 h-75" alt="image" src="@string.Format("{0},{1}","data:image/png;base64", Convert.ToBase64String(item.Image, 0, item.Image.Length))" />
+                    </a>
+                </div>
+            }
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+
+    </div>
+
+

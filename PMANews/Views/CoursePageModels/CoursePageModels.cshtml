@@ -79,7 +79,8 @@
             <div class="card justify-content-center">
                 <div class="card-header mb-2">
                     <a class="card-link text-success text-decoration-none float-left mr-2" asp-controller="PostImage" asp-action="Create">Objavi PNG</a>
-                    <a class="card-link text-success text-muted text-decoration-none float-left" asp-controller="PostImage" asp-action="Index" asp-route-id="@ViewBag.courseID">All Images </a>
+                    <a class="card-link text-success text-muted text-decoration-none float-left mr-2" asp-controller="PostImage" asp-action="Index" asp-route-id="@ViewBag.courseID">All Images </a>
+                    <a class="card-link text-success text-muted text-decoration-none float-left" asp-controller="PostImage" asp-action="Display" asp-route-id="@ViewBag.courseID">Display All</a>
                 </div>
                 <div class="card-body text-left">
                     <ul class="list-group list-group-flush">

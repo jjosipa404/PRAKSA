@@ -31,8 +31,4 @@
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\img\pmf.png" />
-  </ItemGroup>
-
 </Project>

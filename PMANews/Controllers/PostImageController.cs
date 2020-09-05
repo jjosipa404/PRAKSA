@@ -28,19 +28,26 @@ namespace PMANews.Controllers
             _userManager = userManager;
         }
 
-      
-
-        [AllowAnonymous]
+     
         // GET: /PostImage/Index/2
         public async Task<IActionResult> Index(int id)  //course.Id
         {
-            var pMANewsContext = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).Where(i => i.CourseId == id).OrderByDescending(p => p.DateCreated);
+            var images = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).Where(i => i.CourseId == id).OrderByDescending(p => p.DateCreated);
             ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
             ViewBag.User = await _userManager.GetUserAsync(User);
-            return View(await pMANewsContext.ToListAsync());
+            return View(await images.ToListAsync());
         }
 
-        [AllowAnonymous]
+        // GET: /PostImage/Display/2
+        public async Task<IActionResult> Display(int id)  //course.Id
+        {
+            var images = _context.PostImage.Include(p => p.Course).Include(p => p.Category).Include(p => p.Author).Where(i => i.CourseId == id).OrderByDescending(p => p.DateCreated);
+            ViewBag.course = _context.Course.Where(c => c.Id == id).FirstOrDefault();
+            ViewBag.User = await _userManager.GetUserAsync(User);
+            return View(await images.ToListAsync());
+        }
+
+
         // GET: PostImage/Details/5
         public async Task<IActionResult> Details(int? id)
         {
